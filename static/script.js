@@ -1,3 +1,26 @@
+// Added modal functionality - 2025.05.01
+const infoBtn = document.getElementById('info-btn');
+const infoModal = document.getElementById('info-modal');
+const closeModal = document.querySelector('.close-modal');
+
+// Open modal when info button is clicked
+infoBtn.addEventListener('click', () => {
+    infoModal.style.display = 'block';
+});
+
+// Close modal when X is clicked
+closeModal.addEventListener('click', () => {
+    infoModal.style.display = 'none';
+});
+
+// Close modal when clicking outside
+window.addEventListener('click', (event) => {
+    if (event.target === infoModal) {
+        infoModal.style.display = 'none';
+    }
+});
+
+// Existing code remains the same below this point
 const chatContainer = document.getElementById('chat-container');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
@@ -6,6 +29,7 @@ const voiceButton = document.getElementById('voice-button');
 
 let recognition;
 
+// ... (rest of the existing JavaScript code remains unchanged) ...
 // Send message on button click
 sendButton.addEventListener('click', sendMessage);
 
@@ -152,43 +176,43 @@ function addSystemMessage(content) {
     msg.scrollIntoView({ behavior: 'smooth' });
 }
 
-function toggleVoiceInput() {
-    if (!('webkitSpeechRecognition' in window)) {
-        addSystemMessage("Voice input not supported in your browser");
-        return;
-    }
-
-    if (voiceButton.classList.contains('listening')) {
-        recognition.stop();
-        voiceButton.classList.remove('listening');
-        voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
-        return;
-    }
-
-    recognition = new webkitSpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-
-    recognition.onstart = () => {
-        voiceButton.classList.add('listening');
-        voiceButton.innerHTML = '<i class="fas fa-microphone-slash"></i>';
-        addSystemMessage("Listening... Speak now");
-    };
-
-    recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        messageInput.value = transcript;
-        recognition.stop();
-        voiceButton.classList.remove('listening');
-        voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
-    };
-
-    recognition.onerror = (event) => {
-        console.error("Voice recognition error", event.error);
-        voiceButton.classList.remove('listening');
-        voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
-        addSystemMessage("Voice input failed. Please try typing instead.");
-    };
-
-    recognition.start();
-}
+//function toggleVoiceInput() {
+//    if (!('webkitSpeechRecognition' in window)) {
+//        addSystemMessage("Voice input not supported in your browser");
+//        return;
+//    }
+//
+//    if (voiceButton.classList.contains('listening')) {
+//        recognition.stop();
+//        voiceButton.classList.remove('listening');
+//        voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+//        return;
+//    }
+//
+//    recognition = new webkitSpeechRecognition();
+//    recognition.continuous = false;
+//    recognition.interimResults = false;
+//
+//    recognition.onstart = () => {
+//        voiceButton.classList.add('listening');
+//        voiceButton.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+//        addSystemMessage("Listening... Speak now");
+//    };
+//
+//    recognition.onresult = (event) => {
+//        const transcript = event.results[0][0].transcript;
+//        messageInput.value = transcript;
+//        recognition.stop();
+//        voiceButton.classList.remove('listening');
+//        voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+//    };
+//
+//    recognition.onerror = (event) => {
+//        console.error("Voice recognition error", event.error);
+//        voiceButton.classList.remove('listening');
+//        voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+//        addSystemMessage("Voice input failed. Please try typing instead.");
+//    };
+//
+//    recognition.start();
+//}

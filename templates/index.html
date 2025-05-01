@@ -3,18 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chat Interface</title>
+    <title>Word Bot - Dictionary App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-      <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <!-- Added navigation bar - 2025.05.01 -->
+    <nav id="app-nav">
+        <div class="nav-content">
+            <h1 id="app-title">Word Bot</h1>
+            <button id="info-btn" title="About Word Bot">
+                <i class="fas fa-info-circle"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Info Modal - Enhanced 2025.05.01 -->
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="about-content">
+                <h2 class="about-title">About Word Bot</h2>
+                <div class="about-section">
+                    <p class="about-text">
+                        <i class="fas fa-book-open about-icon"></i>
+                        Word Bot is a modern dictionary application that helps you discover word meanings, pronunciations, and usage examples.
+                    </p>
+                </div>
+
+                <div class="about-section">
+                    <h3 class="about-subtitle">Powered By</h3>
+                    <p class="about-text">
+                        <i class="fas fa-code-branch about-icon"></i>
+                        Free Dictionary API - An open-source dictionary service providing comprehensive word data
+                    </p>
+                </div>
+
+                <div class="about-section">
+                    <h3 class="about-subtitle">Features</h3>
+                    <ul class="about-features">
+                        <li><i class="fas fa-check-circle feature-icon"></i> Word definitions with multiple meanings</li>
+                        <li><i class="fas fa-volume-up feature-icon"></i> Audio pronunciations</li>
+                        <li><i class="fas fa-comment-dots feature-icon"></i> Usage examples</li>
+                        <li><i class="fas fa-sync-alt feature-icon"></i> Synonyms and related words</li>
+                    </ul>
+                </div>
+
+                <div class="about-section">
+                    <h3 class="about-subtitle">Developer</h3>
+                    <p class="about-text">
+                        <i class="fas fa-user-tie about-icon"></i>
+                        Created by Shaminda Kanchana
+                    </p>
+                </div>
+
+                <div class="about-footer">
+                    <p class="acknowledgement">
+                        <i class="fas fa-heart heart-icon"></i>
+                        Special thanks to all open-source contributors who make tools like this possible
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="chat-container"></div>
 
     <div id="input-container">
-        <input type="text" id="message-input" placeholder="Type a message...">
-        <button id="voice-button" title="Voice Input">
-            <i class="fas fa-microphone"></i>
-        </button>
+        <input type="text" id="message-input" placeholder="Type a word...">
         <button id="send-button" title="Send">
             <i class="fas fa-paper-plane"></i>
         </button>
@@ -22,6 +78,6 @@
             <i class="fas fa-trash"></i>
         </button>
     </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
