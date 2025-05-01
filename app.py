@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 # Serve HTML frontend
-@app.route('/')
+@app.route('/.netlify/app')
 def home():
     return render_template('index.html')
 
