@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import requests
-
+from serverless_wsgi import handle_request
 app = Flask(__name__)
 
 # Serve HTML frontend
@@ -15,6 +15,9 @@ def define_word():
     api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
     response = requests.get(api_url)
     return jsonify(response.json())  # Pass raw API data to frontend
+
+def handler(event, context):
+    return handle_request(app, event, context)
 
 if __name__ == '__main__':
     app.run(debug=True)
