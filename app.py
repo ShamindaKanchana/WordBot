@@ -8,6 +8,13 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+
+from flask import send_from_directory
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.static_folder, 'favicon.ico', mimetype='image/vnd.microsoft.icon')    
+
 # API endpoint for word definitions
 @app.route('/api/define', methods=['POST'])
 def define_word():
@@ -20,4 +27,4 @@ def handler(event, context):
     return handle_request(app, event, context)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
