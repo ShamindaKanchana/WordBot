@@ -1,12 +1,21 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
 import requests
 
-app = Flask(__name__, static_folder='static', static_url_path='/static')
+app = Flask(__name__,
+    static_folder='static',  # Explicitly set static folder
+    static_url_path=''       # This makes static files available at root URL
+)
+
 
 
 @app.route('/')
 def home():
     return render_template('index.html')
+
+# Add a route to explicitly serve static files
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
 
 
 @app.route('/api/define', methods=['POST'])

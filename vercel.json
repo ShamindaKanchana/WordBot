@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "app.py",
@@ -13,6 +14,10 @@
     {
       "src": "/static/(.*)",
       "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)\\.(?:css|js|json|png|jpg|gif|ico|svg)$",
+      "dest": "/static/$1.$2"
     },
     {
       "src": "/(.*)",
