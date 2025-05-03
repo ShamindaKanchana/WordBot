@@ -1,30 +1,46 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import requests
-from serverless_wsgi import handle_request
+import os
+
 app = Flask(__name__)
 
-# Serve HTML frontend
+
 @app.route('/')
 def home():
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-
-from flask import send_from_directory
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(app.static_folder, 'favicon.ico', mimetype='image/vnd.microsoft.icon')    
+    try:
+        return send_from_directory(app.static_folder, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    except Exception as e:
+        return '', 404
 
-# API endpoint for word definitions
+
 @app.route('/api/define', methods=['POST'])
 def define_word():
-    word = request.json.get('word')
-    api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
-    response = requests.get(api_url)
-    return jsonify(response.json())  # Pass raw API data to frontend
+    try:
+        word = request.json.get('word')
+        if not word:
+            return jsonify({"error": "No word provided"}), 400
 
-def handler(event, context):
-    return handle_request(app, event, context)
+        api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+        response = requests.get(api_url)
+        response.raise_for_status()
+        return jsonify(response.json())
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": "Failed to fetch definition"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
+
+# For Vercel
+app = app
