@@ -4,6 +4,9 @@
     {
       "src": "app.py",
       "use": "@vercel/python"
+    },  {
+      "src": "*/static/*",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -14,9 +17,3 @@
   ]
 }
 
-"builds": [
-  {
-    "src": "*/static/*",
-    "use": "@vercel/static"
-  }
-]
