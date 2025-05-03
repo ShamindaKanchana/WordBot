@@ -1,22 +1,17 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
+import os
 import requests
 
-app = Flask(__name__,
-    static_folder='static',  # Explicitly set static folder
-    static_url_path=''       # This makes static files available at root URL
-)
-
-
+app = Flask(__name__)
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Add a route to explicitly serve static files
-@app.route('/<path:path>')
-def serve_static(path):
-    return send_from_directory('static', path)
-
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    root_dir = os.getcwd()
+    return send_from_directory(os.path.join(root_dir, 'static'), filename)
 
 @app.route('/api/define', methods=['POST'])
 def define_word():
@@ -31,7 +26,6 @@ def define_word():
         return jsonify(response.json())
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 if __name__ == '__main__':
     app.run()
